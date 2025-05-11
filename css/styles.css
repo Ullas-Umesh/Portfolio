@@ -54,8 +54,9 @@ nav ul li a.resume:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 60px 10% 40px 10%;
-  min-height: auto;
+  padding: 60px 10% 80px 10%;
+  min-height: 80vh;
+  flex-wrap: wrap;
 }
 .intro {
   max-width: 55%;
@@ -155,3 +156,34 @@ nav ul li a.resume:hover {
   color: #bbbbbb;
   font-size: 0.95rem;
 }
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 5%;
+  }
+
+  .intro {
+    max-width: 100%;
+  }
+
+  .profile-img {
+    margin-top: 30px;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr; /* 1 column on small screens */
+  }
+
+  .card {
+    margin: 0 auto;
+  }
+}
+
