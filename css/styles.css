@@ -34,15 +34,18 @@ nav ul li a {
   text-decoration: none;
   color: #e6e6e6;
   font-weight: 500;
+  font-size: 1.1rem;       /* Increased from default */
+  padding: 10px 16px;      /* Added padding for size */
   transition: color 0.3s;
 }
 nav ul li a:hover {
   color: #66ccff;
 }
 nav ul li a.resume {
+  font-size: 1.1rem;
+  padding: 10px 16px;
   border: 1px solid #666;
-  padding: 5px 10px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 nav ul li a.resume:hover {
   background-color: #66ccff;
@@ -86,6 +89,7 @@ nav ul li a.resume:hover {
   font-weight: bold;
   transition: background 0.3s, transform 0.2s;
   box-shadow: 0px 4px 10px rgba(102, 204, 255, 0.2);
+  margin-right: 10px;
 }
 .cta-button:hover {
   background: linear-gradient(to right, #3a3fe3, #4ad2ff);
@@ -131,12 +135,20 @@ nav ul li a.resume:hover {
   background: #1e1e1e;
   padding: 30px 20px;
   border-radius: 12px;
-  box-shadow: 0px 8px 24px rgba(0,0,0,0.6);
-  transition: transform 0.4s ease, opacity 0.6s ease;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.6s ease;
   text-align: center;
   opacity: 0;
   transform: translateY(20px);
   border: 1px solid #333;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: transform;
+}
+.card:hover {
+  transform: rotateX(5deg) rotateY(-5deg) scale(1.05);
+  box-shadow: 0px 16px 40px rgba(102, 204, 255, 0.4); /* light blue glow */
+  z-index: 10;
 }
 .card.visible {
   opacity: 1;
@@ -157,33 +169,195 @@ nav ul li a.resume:hover {
   font-size: 0.95rem;
 }
 
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    text-align: center;
-    padding: 40px 5%;
-  }
-
-  .intro {
-    max-width: 100%;
-  }
-
-  .profile-img {
-    margin-top: 30px;
-  }
-
-  nav ul {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-  }
-
-  .card-grid {
-    grid-template-columns: 1fr; /* 1 column on small screens */
-  }
-
-  .card {
-    margin: 0 auto;
-  }
+/* Project Section */
+.project-preview {
+  padding: 100px 10%;
+  text-align: center;
+  background-color: #121212;
+  color: #e6e6e6;
+  margin-top: 80px;
+  position: relative;
+  z-index: 1;
+}
+.project-preview h2 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+}
+.project-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  margin-top: 50px;
+}
+.project-card {
+  background: #1e1e1e;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: left;
+  color: #ddd;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: transform 0.4s ease, opacity 0.6s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.project-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.project-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 32px rgba(102, 204, 255, 0.4); /* light blue glow */
 }
 
+.project-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  height: auto;
+}
+.project-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: #66ccff;
+}
+.project-card p {
+  font-size: 1.05rem;
+  color: #ccc;
+}
+
+
+
+.experience-timeline {
+  padding: 120px 10%;
+  background: transparent;
+  text-align: center;
+}
+
+.experience-timeline h2 {
+  font-size: 2.8rem;
+  color: #ccc;
+  margin-bottom: 60px;
+}
+
+.timeline {
+  position: relative;
+  margin: 0 auto;
+  max-width: 900px;
+  padding-left: 60px;
+  border-left: 3px dashed rgba(102, 204, 255, 0.6);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 120px; /* increased spacing between items */
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  background: #66ccff;
+  border-radius: 50%;
+  position: absolute;
+  left: 0; /* align to left edge of the timeline */
+  top: 6px;
+  transform: translateX(-50%); /* center the dot on the vertical line */
+  box-shadow: 0 0 12px rgba(102, 204, 255, 0.7);
+  z-index: 2;
+}
+
+
+.timeline-year {
+  position: absolute;
+  left: -145px;
+  top: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #aaa;
+  width: 120px;
+  text-align: right;
+}
+
+.timeline-content {
+  background: #1e1e1e;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
+
+.timeline-content h3 {
+  color: #66ccff;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.timeline-content p {
+  font-size: 1.05rem;
+  color: #ccc;
+  margin: 0;
+}
+
+
+.timeline-content {
+  background: #1e1e1e;
+  padding: 20px 25px;
+  border-radius: 10px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.timeline-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(102, 204, 255, 0.4); /* light blue glow */
+}
+
+
+.timeline-content h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #66ccff;
+}
+
+.timeline-content p {
+  margin: 0;
+  color: #ccc;
+}
+
+/* Contact Section */
+.contact {
+  background-color: #0f1115;
+  text-align: center;
+  padding: 60px 10%;
+  color: #e6e6e6;
+}
+.contact h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+.contact p {
+  font-size: 1rem;
+  color: #ccc;
+  margin: 8px 0;
+}
+.contact a {
+  color: #66ccff;
+  text-decoration: none;
+}
+.contact a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  padding: 100px 10%;
+  min-height: calc(100vh - 80px);
+  box-sizing: border-box;
+}

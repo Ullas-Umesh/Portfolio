@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('.card');
+  const elements = document.querySelectorAll('.card, .project-card, .timeline-item');
+
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -7,16 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.2 });
 
-  cards.forEach(card => observer.observe(card));
-
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      document.querySelector(this.getAttribute('href')).scrollIntoView({
-        behavior: 'smooth'
-      });
-    });
-  });
+  elements.forEach(el => observer.observe(el));
 });
