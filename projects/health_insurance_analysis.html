@@ -5,9 +5,121 @@
   <title>Fetal Health Classifier | Ullas Umesh</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
+
+  <nav>
+  <h2>Ullas Umesh</h2>
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../experience.html">Experience</a></li>
+    <li><a href="../projects.html">Projects</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+    <li><a href="../assets/resume/ULLAS-UMESH-CV.pdf" target="_blank" class="resume">Resume</a></li>
+  </ul>
+</nav>
+
+<section class="content">
+  <h1>Health Insurance Analysis – R Code</h1>
+  <div style="background:#1e1e1e; color:#e6e6e6; border-radius:10px; padding:20px; overflow-x:auto; font-size:0.9rem;">
+    <pre><code>
+setwd("D://Stats and Visualization/Coursework")
+data_file = read.csv("Health-Insurance-Dataset.csv")
+attach(data_file)
+
+# Viewing the dataset
+head(data_file)
+tail(data_file)
+str(data_file)
+colSums(is.na(data_file))
+summary(data_file)
+
+# Evaluate SD, variance
+continuous_variables <- c("age", "bmi", "children", "charges")
+apply(data_file[continuous_variables],2,sd)
+apply(data_file[continuous_variables],2,var)
+
+# Kurtosis
+install.packages("moments")
+library(moments)
+apply(data_file[continuous_variables],2,kurtosis)
+
+# Count categorical data
+count_male = sum(sex == 'male')
+count_female = sum(sex == 'female')
+count_smoker = sum(smoker == "yes")
+count_nonsmoker = sum(smoker == 'no')
+
+count_northeast = sum(region == 'northeast')
+count_northwest = sum(region == 'northwest')
+count_southeast = sum(region == 'southeast')
+count_southwest = sum(region == 'southwest')
+
+# Visualization
+install.packages('dplyr')
+library(dplyr)
+library(ggplot2)
+
+ggplot(data_file, aes(age)) + geom_histogram(aes(y = ..density..), binwidth = 2, fill = "skyblue") + geom_density(alpha = .2, fill = "purple")
+# Repeat for bmi, children, charges...
+
+# Bar plots
+barplot(table(sex))
+barplot(table(region))
+barplot(table(smoker))
+
+# Correlation
+install.packages("corrplot")
+library(corrplot)
+numeric_data <- data_file[,c("age","bmi","children","charges")]
+correlation_matrix <- cor(numeric_data)
+corrplot(correlation_matrix, method = "color")
+
+# Normality and Correlation tests
+install.packages("psych")
+install.packages("GGally")
+library(psych)
+library(GGally)
+
+pairs(numeric_data)
+ks.test(age, "pnorm", mean=mean(age), sd=sd(age))
+cor(numeric_data)
+cor.test(age, charges, method="spearman")
+
+# Chi-square tests
+chisq.test(sex, smoker)
+chisq.test(sex, region)
+chisq.test(smoker, region)
+
+# Linear regression
+install.packages("fastDummies")
+install.packages("car")
+library(fastDummies)
+library(car)
+
+lm_data <- dummy_cols(data_file, select_columns=c("smoker", "sex", "region"))
+model <- lm(charges ~ age + sex_male + bmi + children + smoker_yes + region_northeast + region_northwest + region_southeast, data = lm_data)
+summary(model)
+crPlots(model)
+
+# Charge Split analysis
+data_category_A <- filter(data_file, charges <= median(charges))
+data_category_B <- filter(data_file, charges > median(charges))
+
+ks.test(data_category_A$age, "pnorm", mean=mean(data_category_A$age), sd=sd(data_category_A$age))
+wilcox.test(data_category_A$age, data_category_B$age)
+
+data_file$CHARGE_split <- ifelse(data_file$charges <= median(data_file$charges), "Category A", "Category B")
+ggplot(data_file, aes(x = CHARGE_split, y = charges, fill = CHARGE_split)) + geom_boxplot()
+
+# ANOVA and Kruskal-Wallis
+kruskal.test(age ~ region, data = data_file)
+anova_result_bmi <- aov(bmi ~ region, data = data_file)
+summary(anova_result_bmi)
+TukeyHSD(anova_result_bmi)
+    </code></pre>
+  </div>
+</section>
 
 <nav>
   <h2>Ullas Umesh</h2>
@@ -19,40 +131,13 @@
   </ul>
 </nav>
 
-<!-- <section class="content">
-  <h1>Fetal Health Classifier</h1>
-    <div class="responsive-iframe-container">
-    <iframe src="fetal_health_project.md" allowfullscreen></iframe>
-  </div>
-</section> -->
-
-<!-- <script>
-  fetch('fetal_health_project.md')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.text();
-    })
-    .then(md => {
-      document.getElementById('markdown-container').innerHTML = marked.parse(md);
-    })
-    .catch(error => {
-      document.getElementById('markdown-container').innerText =
-        "❌ Failed to load project documentation: " + error.message;
-      console.error(error);
-    });
-</script> -->
-
-  </section>
-  <script src="js/scripts.js"></script>
-  <section class="contact" id="contact">
+<section class="contact" id="contact">
   <h2>Contact Me</h2>
   <p>I'd love to connect. Reach out via email or LinkedIn.</p>
   <div class="contact-details">
-    <p>📧 <a href="mail to: ullasumesh02@gmail.com">ullasumesh02@gmail.com</a></p>
+    <p>📧 <a href="mailto:ullasumesh02@gmail.com">ullasumesh02@gmail.com</a></p>
     <p>🔗 <a href="https://github.com/Ullas-Umesh?tab=repositories" target="_blank">GitHub</a></p>
-    <p>🔗 <a href="www.linkedin.com/in/ullas-umesh/" target="_blank">LinkedIn Profile</a></p>
+    <p>🔗 <a href="https://www.linkedin.com/in/ullas-umesh/" target="_blank">LinkedIn Profile</a></p>
   </div>
 </section>
 
