@@ -380,3 +380,71 @@ nav ul li a.resume:hover {
   height: 100%;
   border: none;
 }
+
+.company-logos {
+  display: flex;
+  gap: 40px;
+  margin-top: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.company-logos img {
+  height: 50px;
+  max-width: 120px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* optional for white on dark bg */
+  opacity: 0.8;
+  transition: transform 0.3s ease;
+}
+
+.company-logos img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.worked-with {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.logo-heading {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #ccc;
+  margin-bottom: 40px;
+}
+
+.company-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 70px;
+  margin-top: 5px;
+}
+
+.company-logos img {
+  height: 7;
+  max-width: 200px;
+  object-fit: contain;
+  opacity: 0.85;
+  transition: transform 0.3s ease;
+}
+
+.timeline-item-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.timeline-item-link:hover .timeline-content {
+  background: #222;
+  box-shadow: 0 0 15px rgba(102, 204, 255, 0.3);
+  transform: translateY(-3px);
+  cursor: pointer;
+}
+
+
+
