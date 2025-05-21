@@ -27,23 +27,6 @@
   </div>
 </section>
 
-<script>
-  fetch('fetal_health_project.md')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.text();
-    })
-    .then(md => {
-      document.getElementById('markdown-container').innerHTML = marked.parse(md);
-    })
-    .catch(error => {
-      document.getElementById('markdown-container').innerText =
-        "❌ Failed to load project documentation: " + error.message;
-      console.error(error);
-    });
-</script>
 
   </section>
   <script src="js/scripts.js"></script>
